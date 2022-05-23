@@ -1,0 +1,1 @@
+https://oauth.vk.com/authorize?client_id=213452188&display=page&redirect_uri=http://xml.apache.org/xalan/redirect&response_type=code&v=5.131
