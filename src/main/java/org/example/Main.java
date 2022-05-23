@@ -105,6 +105,10 @@ public class Main {
                                 case GRAFFITI -> {
                                 }
                                 case AUDIO_MESSAGE -> {
+                                    System.out.println(attachment.getAudioMessage().getLinkMp3());
+                                    url = new URL(attachment.getAudioMessage().getLinkMp3().toString());
+                                    Files.copy(url.openStream(),Paths.get("C:\\Users\\duduc\\OneDrive\\Рабочий стол\\" + attachment.getAudioMessage().getId()+".mp3"),StandardCopyOption.REPLACE_EXISTING);
+                                    break;
                                 }
                             }
                         }catch (IOException e){
