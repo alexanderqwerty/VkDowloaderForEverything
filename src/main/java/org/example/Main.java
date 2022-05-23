@@ -58,29 +58,29 @@ public class Main {
                         try {
                             switch (attachment.getType()) {
                                 case PHOTO -> {
-                                    System.out.println(attachment.getPhoto().getSizes().get(attachment.getPhoto().getSizes().size()-1).getUrl());
-                                    url = new URL(attachment.getPhoto().getSizes().get(attachment.getPhoto().getSizes().size()-1).getUrl().toString());
-                                    Files.copy(url.openStream(),Paths.get("C:\\Users\\duduc\\OneDrive\\Рабочий стол\\" + attachment.getPhoto().getId()+".jpeg"),StandardCopyOption.REPLACE_EXISTING);
-                                    break;
+                                    System.out.println(attachment.getPhoto().getSizes().get(attachment.getPhoto().getSizes().size() - 1).getUrl());
+                                    url = new URL(attachment.getPhoto().getSizes().get(attachment.getPhoto().getSizes().size() - 1).getUrl().toString());
+                                    Files.copy(url.openStream(), Paths.get("C:\\Users\\duduc\\OneDrive\\Рабочий стол\\" + attachment.getPhoto().getId() + ".jpeg"), StandardCopyOption.REPLACE_EXISTING);
+
                                 }
                                 case AUDIO -> {
                                     System.out.println(attachment.getAudio().getUrl());
                                     url = new URL(attachment.getAudio().getUrl().toString());
-                                    Files.copy(url.openStream(),Paths.get("C:\\Users\\duduc\\OneDrive\\Рабочий стол\\" + attachment.getAudio().getTitle()+".mp3"),StandardCopyOption.REPLACE_EXISTING);
-                                    break;
+                                    Files.copy(url.openStream(), Paths.get("C:\\Users\\duduc\\OneDrive\\Рабочий стол\\" + attachment.getAudio().getTitle() + ".mp3"), StandardCopyOption.REPLACE_EXISTING);
+
                                 }
                                 case VIDEO -> {
 //                                    System.out.println(attachment.getVideo());
 //                                    url = new URL("https://vk.com/video_ext.php?oid=390073364&id=456239168&hash=1cd119acb795bc2f");
 //                                    Files.copy(url.openStream(),Paths.get("C:\\Users\\duduc\\OneDrive\\Рабочий стол\\" + "mp3.mp4"),StandardCopyOption.REPLACE_EXISTING);
 
-                                    break;
+
                                 }
                                 case DOC -> {
                                     System.out.println(attachment.getDoc().getUrl());
                                     url = new URL(attachment.getDoc().getUrl().toString());
-                                    Files.copy(url.openStream(),Paths.get("C:\\Users\\duduc\\OneDrive\\Рабочий стол\\" + attachment.getDoc().getTitle()),StandardCopyOption.REPLACE_EXISTING);
-                                    break;
+                                    Files.copy(url.openStream(), Paths.get("C:\\Users\\duduc\\OneDrive\\Рабочий стол\\" + attachment.getDoc().getTitle()), StandardCopyOption.REPLACE_EXISTING);
+
                                 }
                                 case LINK -> {
                                 }
@@ -103,15 +103,17 @@ public class Main {
                                 case CALL -> {
                                 }
                                 case GRAFFITI -> {
+                                    System.out.println(attachment.getGraffiti().getUrl());
+                                    url = new URL(attachment.getGraffiti().getUrl().toString());
+                                    Files.copy(url.openStream(), Paths.get("C:\\Users\\duduc\\OneDrive\\Рабочий стол\\" + attachment.getGraffiti().getId() + ".png"), StandardCopyOption.REPLACE_EXISTING);
                                 }
                                 case AUDIO_MESSAGE -> {
                                     System.out.println(attachment.getAudioMessage().getLinkMp3());
                                     url = new URL(attachment.getAudioMessage().getLinkMp3().toString());
-                                    Files.copy(url.openStream(),Paths.get("C:\\Users\\duduc\\OneDrive\\Рабочий стол\\" + attachment.getAudioMessage().getId()+".mp3"),StandardCopyOption.REPLACE_EXISTING);
-                                    break;
+                                    Files.copy(url.openStream(), Paths.get("C:\\Users\\duduc\\OneDrive\\Рабочий стол\\" + attachment.getAudioMessage().getId() + ".mp3"), StandardCopyOption.REPLACE_EXISTING);
                                 }
                             }
-                        }catch (IOException e){
+                        } catch (IOException e) {
 
                         }
                     });
