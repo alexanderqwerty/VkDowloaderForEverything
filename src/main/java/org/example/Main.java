@@ -74,34 +74,13 @@ public class Main {
 //                                    url = new URL("https://vk.com/video_ext.php?oid=390073364&id=456239168&hash=1cd119acb795bc2f");
 //                                    Files.copy(url.openStream(),Paths.get("C:\\Users\\duduc\\OneDrive\\Рабочий стол\\" + "mp3.mp4"),StandardCopyOption.REPLACE_EXISTING);
 
-
                                 }
                                 case DOC -> {
                                     System.out.println(attachment.getDoc().getUrl());
                                     url = new URL(attachment.getDoc().getUrl().toString());
                                     Files.copy(url.openStream(), Paths.get("C:\\Users\\duduc\\OneDrive\\Рабочий стол\\" + attachment.getDoc().getTitle()), StandardCopyOption.REPLACE_EXISTING);
+                                }
 
-                                }
-                                case LINK -> {
-                                }
-                                case MARKET -> {
-                                }
-                                case MARKET_ALBUM -> {
-                                }
-                                case GIFT -> {
-                                }
-                                case STICKER -> {
-                                }
-                                case WALL -> {
-                                }
-                                case WALL_REPLY -> {
-                                }
-                                case ARTICLE -> {
-                                }
-                                case POLL -> {
-                                }
-                                case CALL -> {
-                                }
                                 case GRAFFITI -> {
                                     System.out.println(attachment.getGraffiti().getUrl());
                                     url = new URL(attachment.getGraffiti().getUrl().toString());
@@ -112,8 +91,11 @@ public class Main {
                                     url = new URL(attachment.getAudioMessage().getLinkMp3().toString());
                                     Files.copy(url.openStream(), Paths.get("C:\\Users\\duduc\\OneDrive\\Рабочий стол\\" + attachment.getAudioMessage().getId() + ".mp3"), StandardCopyOption.REPLACE_EXISTING);
                                 }
+                                default -> {
+                                    vk.messages().send(a).userId(message.getFromId()).randomId(random.nextInt(10000)).message("Пока не поддерживается").execute();
+                                }
                             }
-                        } catch (IOException e) {
+                        } catch (IOException | ApiException | ClientException e) {
 
                         }
                     });
