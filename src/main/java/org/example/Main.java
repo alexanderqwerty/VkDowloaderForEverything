@@ -3,41 +3,27 @@ package org.example;
 import com.vk.api.sdk.client.TransportClient;
 import com.vk.api.sdk.client.VkApiClient;
 import com.vk.api.sdk.client.actors.GroupActor;
-import com.vk.api.sdk.client.actors.UserActor;
 import com.vk.api.sdk.exceptions.ApiException;
 import com.vk.api.sdk.exceptions.ClientException;
 import com.vk.api.sdk.httpclient.HttpTransportClient;
-import com.vk.api.sdk.objects.GroupAuthResponse;
-import com.vk.api.sdk.objects.UserAuthResponse;
-import com.vk.api.sdk.objects.Validable;
-import com.vk.api.sdk.objects.messages.HistoryAttachment;
 import com.vk.api.sdk.objects.messages.Message;
 import com.vk.api.sdk.objects.messages.MessageAttachment;
-import com.vk.api.sdk.queries.messages.MessagesGetHistoryAttachmentsQuery;
 import com.vk.api.sdk.queries.messages.MessagesGetLongPollHistoryQuery;
-import org.apache.poi.ss.formula.atp.Switch;
 
 
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.net.MalformedURLException;
 import java.net.URL;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
-import java.util.Arrays;
-import java.util.Base64;
 import java.util.List;
 import java.util.Random;
 
 
 public class Main {
     static String accessToken = "4da688544537d33cd6f120a4cef3e678b84074bae59038ed9729db382f697395c418802676078551790e7";
-    static String fuck ="Иди нахуй ваня";
-    static String director= "F:\\";
+    static String fuck = "Иди нахуй ваня";
+    static String director = "C:\\Users\\duduc\\OneDrive\\Рабочий стол";
     static Integer groupid = 213452188;
     static Integer ivan = 397698080;
     static Integer my = 397698080;
@@ -45,7 +31,7 @@ public class Main {
     public static void getPhoto(MessageAttachment attachment) throws IOException {
         System.out.println(attachment.getPhoto().getSizes().get(attachment.getPhoto().getSizes().size() - 1).getUrl());
         URL url = new URL(attachment.getPhoto().getSizes().get(attachment.getPhoto().getSizes().size() - 1).getUrl().toString());
-        Files.copy(url.openStream(), Paths.get("C:\\Users\\duduc\\OneDrive\\Рабочий стол\\" + attachment.getPhoto().getId() + ".jpeg"), StandardCopyOption.REPLACE_EXISTING);
+        Files.copy(url.openStream(), Paths.get(director + attachment.getPhoto().getId() + ".jpeg"), StandardCopyOption.REPLACE_EXISTING);
     }
 
     public static void getVideo(VkApiClient vk, GroupActor a) throws IOException, ClientException, ApiException {
@@ -77,6 +63,14 @@ public class Main {
         System.out.println(attachment.getAudioMessage().getLinkMp3());
         URL url = new URL(attachment.getAudioMessage().getLinkMp3().toString());
         Files.copy(url.openStream(), Paths.get(director + attachment.getAudioMessage().getId() + ".mp3"), StandardCopyOption.REPLACE_EXISTING);
+    }
+
+    public static boolean hasReplyMessage(Message message) {
+        try {
+            return !message.getReplyMessage().getAttachments().isEmpty();
+        } catch (NullPointerException e) {
+            return false;
+        }
     }
 
     public static void main(String[] args) throws ClientException, ApiException, InterruptedException {
@@ -112,13 +106,13 @@ public class Main {
                             }
 
                         });
-                    else if (!message.getReplyMessage().getAttachments().isEmpty()) {
+                    else if (hasReplyMessage(message)) {
                         message.getReplyMessage().getAttachments().forEach(attachment -> {
                             try {
                                 switch (attachment.getType()) {
                                     case PHOTO -> getPhoto(attachment);
                                     case AUDIO -> getAudio(attachment);
-                                    case VIDEO -> getVideo(vk,a);
+                                    case VIDEO -> getVideo(vk, a);
                                     case DOC -> getDoc(attachment);
                                     case GRAFFITI -> getGraffiti(attachment);
                                     case AUDIO_MESSAGE -> getAudioMessage(attachment);
@@ -132,6 +126,8 @@ public class Main {
                             }
 
                         });
+                    } else {
+                        System.out.println(message.getText());
                     }
                 });
             }
